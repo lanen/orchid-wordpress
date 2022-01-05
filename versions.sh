@@ -34,17 +34,17 @@ for version in "${versions[@]}"; do
 			fi
 		done
 	else
-		possibleVersion="$(
-			wget -qO- "https://api.wordpress.org/core/version-check/1.7/?channel=$version" \
-				| jq -r '.offers[0].current'
-		)"
-		if [ -n "$possibleVersion" ] && sha1="$(wget -qO- "https://wordpress.org/wordpress-$possibleVersion.tar.gz.sha1")" && [ -n "$sha1" ]; then
+		possibleVersion="5.8.2"
+		if [ -n "$possibleVersion" ] && sha1="$(wget -qO- "https://github.com/lanen/WordPress/archive/refs/tags/$possibleVersion.tar.gz.sha1")" && [ -n "$sha1" ]; then
 			fullVersion="$possibleVersion"
 			export sha1 fullVersion
 			doc="$(jq <<<"$doc" -c '.sha1 = env.sha1 | .upstream = env.fullVersion')"
 			if [[ "$fullVersion" != *.*.* && "$fullVersion" == *.* && "$fullVersion" != *-* ]]; then
 				fullVersion+='.0'
 			fi
+    else
+       fullVersion="$possibleVersion"
+       export sha1 fullVersion
 		fi
 	fi
 	if [ -z "$fullVersion" ]; then
@@ -58,12 +58,12 @@ for version in "${versions[@]}"; do
 		jq <<<"$json" -c --argjson doc "$doc" '
 			.[env.version] = {
 				version: env.fullVersion,
-				phpVersions: [ "7.4", "7.3", "8.0", "8.1" ],
+				phpVersions: [ "7.4", "7.3" ],
 				variants: (
 					if env.version == "cli" then
 						[ "alpine" ]
 					else
-						[ "apache", "fpm", "fpm-alpine" ]
+						[ "fpm-alpine" ]
 					end
 				),
 			} + $doc

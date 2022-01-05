@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-set -Eeuo pipefail
+set -Eeuox pipefail
 
 # https://wordpress.org/about/requirements/
 # https://wordpress.org/support/update-php/#before-you-update-your-php-version
-defaultPhpVersion='php7.4'
-defaultVariant='apache'
+defaultPhpVersion='php7.3'
+defaultVariant='fpm-alpine'
 
 self="$(basename "$BASH_SOURCE")"
 cd "$(dirname "$(readlink -f "$BASH_SOURCE")")"
@@ -41,8 +41,7 @@ dirCommit() {
 
 getArches() {
 	local repo="$1"; shift
-	local officialImagesUrl='https://github.com/lanen/orchid-images/raw/main/library/'
-
+	local officialImagesUrl='https://github.com/docker-library/official-images/raw/master/library/'
 	eval "declare -g -A parentRepoToArches=( $(
 		find -name 'Dockerfile' -exec awk '
 				toupper($1) == "FROM" && $2 !~ /^('"$repo"'|scratch|.*\/.*)(:|$)/ {
@@ -58,7 +57,7 @@ getArches 'orchid-wordpress'
 cat <<-EOH
 # this file is generated via https://github.com/lanen/orchid-wordpress/blob/$(fileCommit "$self")/$self
 
-Maintainers: evan <cppmain@gmail.com>
+Maintainers: evan <cppmain@gmail.com> (@lanen)
 GitRepo: https://github.com/lanen/orchid-wordpress.git
 EOH
 

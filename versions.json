@@ -1,0 +1,12 @@
+{
+  "latest": {
+    "phpVersions": [
+      "7.4",
+      "7.3"
+    ],
+    "variants": [
+      "fpm-alpine"
+    ],
+    "version": "5.8.2"
+  }
+}

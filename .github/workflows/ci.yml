@@ -22,8 +22,13 @@ jobs:
       - id: generate-jobs
         name: Generate Jobs
         run: |
+          #export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+          ./update.sh latest
           git clone --depth 1 https://github.com/docker-library/bashbrew.git -b master ~/bashbrew
-          strategy="$(~/bashbrew/scripts/github-actions/generate.sh)"
+          #bash -x ./generate-stackbrew-library.sh
+          #echo $PWD 
+          #ls
+          strategy="$(bash -x ~/bashbrew/scripts/github-actions/generate.sh)"
           jq . <<<"$strategy" # sanity check / debugging aid
           echo "::set-output name=strategy::$strategy"
 
