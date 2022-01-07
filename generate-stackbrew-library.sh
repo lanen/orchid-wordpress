@@ -38,10 +38,9 @@ dirCommit() {
 			')
 	)
 }
-
 getArches() {
 	local repo="$1"; shift
-	local officialImagesUrl='https://github.com/docker-library/official-images/raw/master/library/'
+	local officialImagesUrl='https://github.com/lanen/orchid-images/raw/main/library/'
 
 	eval "declare -g -A parentRepoToArches=( $(
 		find -name 'Dockerfile' -exec awk '
@@ -53,8 +52,8 @@ getArches() {
 			| xargs bashbrew cat --format '[{{ .RepoName }}:{{ .TagName }}]="{{ join " " .TagEntry.Architectures }}"'
 	) )"
 }
-getArches 'orchid-wordpress'
-
+#getArches 'orchid-wordpress'
+#parentRepoToArches=( "orchid-wordpress:php7.3-fpm-alpine=fpm-alpine",  "orchid-wordpress:php7.4-fpm-alpine=fpm-alpine" )
 cat <<-EOH
 # this file is generated via https://github.com/lanen/orchid-wordpress/blob/$(fileCommit "$self")/$self
 
@@ -138,12 +137,13 @@ for version; do
 			fi
 
 			variantParent="$(awk 'toupper($1) == "FROM" { print $2 }' "$dir/Dockerfile")"
-			variantArches="${parentRepoToArches[$variantParent]}"
-
+		#	variantArches="${parentRepoToArches[$variantParent]}"
+		#echo $variantParent	
+			#	Architectures: $(join ', ' $variantArches)
 			echo
 			cat <<-EOE
 				Tags: $(join ', ' "${fullAliases[@]}")
-				Architectures: $(join ', ' $variantArches)
+				Architectures: fpm-alpine
 				GitCommit: $commit
 				Directory: $dir
 			EOE
