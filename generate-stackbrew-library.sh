@@ -57,7 +57,7 @@ getArches() {
 cat <<-EOH
 # this file is generated via https://github.com/lanen/orchid-wordpress/blob/$(fileCommit "$self")/$self
 
-Maintainers: evan <cppmain@gmail.com>
+Maintainers: evan <cppmain@gmail.com> (@lanen)
 GitRepo: https://github.com/lanen/orchid-wordpress.git
 EOH
 

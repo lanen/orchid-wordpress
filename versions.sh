@@ -17,7 +17,7 @@ for version in "${versions[@]}"; do
 
 	doc='{}'
 
-	fullVersion='5.8.2'
+	fullVersion='5.8.3'
 	
 	if [ -z "$fullVersion" ]; then
 		echo >&2 "error: failed to find version for $version"
