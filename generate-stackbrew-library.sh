@@ -143,7 +143,7 @@ for version; do
 			echo
 			cat <<-EOE
 				Tags: $(join ', ' "${fullAliases[@]}")
-				Architectures: fpm-alpine
+				Architectures: amd64
 				GitCommit: $commit
 				Directory: $dir
 			EOE
