@@ -184,7 +184,7 @@ RUN set -eux; \
 
 {{ if env.version != "cli" then ( -}}
 RUN set -eux; \
-	version={{ .upstream | @sh }}; \
+	version={{ .version | @sh }}; \
 	sha1={{ .sha1 | @sh }}; \
 	\
 	curl -o wordpress.tar.gz -fL "https://wordpress.org/wordpress-$version.tar.gz"; \
