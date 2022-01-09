@@ -7,7 +7,7 @@ jqt='.jq-template.awk'
 if [ -n "${BASHBREW_SCRIPTS:-}" ]; then
 	jqt="$BASHBREW_SCRIPTS/jq-template.awk"
 elif [ "$BASH_SOURCE" -nt "$jqt" ]; then
-	time wget -qO "$jqt" 'https://github.com/docker-library/bashbrew/raw/5f0c26381fb7cc78b2d217d58007800bdcfbcfa1/scripts/jq-template.awk'
+	time wget -qO "$jqt" 'https://github.com.cnpmjs.org/docker-library/bashbrew/raw/5f0c26381fb7cc78b2d217d58007800bdcfbcfa1/scripts/jq-template.awk'
 fi
 if [ "$#" -eq 0 ]; then
 	versions="$(jq -r 'keys | map(@sh) | join(" ")' versions.json)"
